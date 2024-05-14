@@ -30,10 +30,10 @@ describe('Project01 - Validate Form Elements', () => {
       cy.get('.control > .label').should('have.text', 'Gender *')
       cy.get('.mr-1').should('have.attr', 'required')
 
-      const exp = ["Male", "Female", "Prefer not to disclose"];
+      const gender = ["Male", "Female", "Prefer not to disclose"];
 
       cy.get('.radio').each(($el, index) => {
-      cy.wrap($el).should('have.text', exp[index]).find('.mr-1').should('be.enabled').and('be.empty');
+      cy.wrap($el).should('have.text', gender[index]).find('.mr-1').should('be.enabled').and('be.empty');
 
     });
 
@@ -109,7 +109,35 @@ describe('Project01 - Validate Form Elements', () => {
 
     it('Test Case 10 - Validate the Form Submission', () => {
 
+      const fname = "Hicran";
+      const address = "123 E. Tech Blvd. Chicago IL 60517";
+      const email = "hic_er@yahoo.com";
+      const phone = "312 555 55 55";
+      const message = "I would like to learn more about your program."
 
+      cy.get('.input').first().type(`${fname}{enter}`)
+      
+      cy.get('.mr-1').eq(1).click()
+ 
+
+      cy.get('.input[type="text"]').last().type(`${address}{enter}`)
+
+      cy.get('.input[type="email"]').type(`${email}`)
+
+      cy.get('.input[type="phone"]').type(`${phone}`)
+
+      cy.get('.textarea').type(`${message}`)
+
+      cy.get('.checkbox').click()
+
+      cy.get('button[type="submit"]').click()
+
+      cy.get('.mt-5').should('have.text', "Thanks for submitting!")
+
+      Cypress.on("uncaught:exception", () => {
+        return false;
+          
     })
 
+})
 })
